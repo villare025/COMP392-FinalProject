@@ -1,0 +1,29 @@
+{
+  "name": "COMP392-Final Project",
+  "authors": [
+    "Angelina Gutierrez <agutier8@my.centennialcollege.ca>",
+    "Elaine Mae Villarino <evillari@my.centennialcollege.ca>"
+  ],
+  "description": "COMP392 Final Project for Advanced Graphics",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "https://github.com/Flame2Ashes/COMP392---Final-Project.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Scripts/lib"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "stats.js": "*",
+    "Physijs": "physijs#*",
+    "EaselJS": "^0.8.2",
+    "TweenJS": "^0.6.2",
+    "SoundJS": "^0.6.2",
+    "PreloadJS": "^0.6.2"
+  }
+}
