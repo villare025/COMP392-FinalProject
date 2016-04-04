@@ -70,19 +70,38 @@ var scenes;
         Play.prototype.setupScoreboard = function () {
             // initialize  score and lives values
             this.scoreValue = 0;
+            this.recentScoreValue = 0;
+            this.highestScoreValue = 0;
             this.livesValue = 1;
+            this.bonusValue = 9999;
             // Add Lives Label
-            this.livesLabel = new createjs.Text("LIVES: " + this.livesValue, "40px Consolas", "#ffffff");
-            this.livesLabel.x = config.Screen.WIDTH * 0.1;
-            this.livesLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
+            this.livesLabel = new createjs.Text("Lives: " + this.livesValue, "40px Consolas", "#ffffff");
+            this.livesLabel.x = config.Screen.WIDTH * 0.45;
+            this.livesLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
             this.stage.addChild(this.livesLabel);
             console.log("Added Lives Label to stage");
             // Add Score Label
-            this.scoreLabel = new createjs.Text("SCORE: " + this.scoreValue, "40px Consolas", "#ffffff");
-            this.scoreLabel.x = config.Screen.WIDTH * 0.8;
-            this.scoreLabel.y = (config.Screen.HEIGHT * 0.15) * 0.20;
+            this.scoreLabel = new createjs.Text("Score: " + this.scoreValue, "40px Consolas", "#ffffff");
+            this.scoreLabel.x = config.Screen.WIDTH * 0.1;
+            this.scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
             this.stage.addChild(this.scoreLabel);
             console.log("Added Score Label to stage");
+            //Add Highest Score Label
+            this.highestScoreLabel = new createjs.Text("High Score: " + this.highestScoreValue, "20px Consolas", "#ffffff");
+            this.highestScoreLabel.x = config.Screen.WIDTH * 0.6;
+            this.highestScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
+            this.stage.addChild(this.highestScoreLabel);
+            //Add Recent Score Label
+            this.recentScoreLabel = new createjs.Text("Recent Score: " + this.recentScoreValue, "20px Consolas", "#ffffff");
+            this.recentScoreLabel.x = config.Screen.WIDTH * 0.3;
+            this.recentScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
+            this.stage.addChild(this.recentScoreLabel);
+            //Add Bonus Label
+            this.bonusLabel = new createjs.Text("Bonus: " + this.bonusValue, "40px Consolas", "#ffffff");
+            this.bonusLabel.x = config.Screen.WIDTH * 0.8;
+            this.bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+            this.stage.addChild(this.bonusLabel);
+            console.log("Added bonusLabel to stage");
         };
         /**
          * Add a spotLight to the scene
@@ -149,7 +168,7 @@ var scenes;
             this.playerGeometry = new BoxGeometry(2, 4, 2);
             this.playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
             this.player = new Physijs.BoxMesh(this.playerGeometry, this.playerMaterial, 1);
-            this.player.position.set(0, 30, 10);
+            this.player.position.set(0, 10, 10);
             this.player.receiveShadow = true;
             this.player.castShadow = true;
             this.player.name = "Player";
@@ -493,6 +512,123 @@ var scenes;
             console.log("Added a Road 32 to the scene");
         };
         /**
+         * This method adds platforms
+         *
+         * @method addPlatforms
+         * @return void
+         */
+        Play.prototype.addPlatforms = function () {
+            // Platform Components
+            //Platform One
+            this.platform1Texture = new THREE.TextureLoader().load('../../Assets/images/MarbleGreen.jpg');
+            this.platform1Material = new PhongMaterial();
+            this.platform1Material.map = this.platform1Texture;
+            this.platform1Material.bumpScale = 0.2;
+            this.platform1Geometry = new BoxGeometry(5, 6, 5);
+            this.platform1PhysicsMaterial = Physijs.createMaterial(this.platform1Material, 0, 0);
+            this.platform1 = new Physijs.BoxMesh(this.platform1Geometry, this.platform1PhysicsMaterial, 0);
+            this.platform1.receiveShadow = true;
+            this.platform1.castShadow = true;
+            this.platform1.position.set(0, 0, 10);
+            this.platform1.name = "Platform1";
+            scene.add(this.platform1);
+            console.log("Added a Platform 1 to the scene");
+            //Platform Two
+            this.platform2Texture = new THREE.TextureLoader().load('../../Assets/images/AbstractVarious.jpg');
+            this.platform2Material = new PhongMaterial();
+            this.platform2Material.map = this.platform2Texture;
+            this.platform2Material.bumpScale = 0.2;
+            this.platform2Geometry = new BoxGeometry(5, 6, 5);
+            this.platform2PhysicsMaterial = Physijs.createMaterial(this.platform2Material, 0, 0);
+            this.platform2 = new Physijs.BoxMesh(this.platform2Geometry, this.platform2PhysicsMaterial, 0);
+            this.platform2.receiveShadow = true;
+            this.platform2.castShadow = true;
+            this.platform2.position.set(60, 0, -50);
+            this.platform2.name = "Platform2";
+            scene.add(this.platform2);
+            console.log("Added a Platform 2 to the scene");
+            //Platform Three
+            this.platform3Texture = new THREE.TextureLoader().load('../../Assets/images/AbstractVarious.jpg');
+            this.platform3Material = new PhongMaterial();
+            this.platform3Material.map = this.platform3Texture;
+            this.platform3Material.bumpScale = 0.2;
+            this.platform3Geometry = new BoxGeometry(5, 6, 5);
+            this.platform3PhysicsMaterial = Physijs.createMaterial(this.platform3Material, 0, 0);
+            this.platform3 = new Physijs.BoxMesh(this.platform3Geometry, this.platform3PhysicsMaterial, 0);
+            this.platform3.receiveShadow = true;
+            this.platform3.castShadow = true;
+            this.platform3.position.set(-60, 0, 50);
+            this.platform3.name = "Platform3";
+            scene.add(this.platform3);
+            console.log("Added a Platform 3 to the scene");
+            //Platform 4
+            this.platform4Texture = new THREE.TextureLoader().load('../../Assets/images/AbstractVarious.jpg');
+            this.platform4Material = new PhongMaterial();
+            this.platform4Material.map = this.platform4Texture;
+            this.platform4Material.bumpScale = 0.2;
+            this.platform4Geometry = new BoxGeometry(5, 6, 5);
+            this.platform4PhysicsMaterial = Physijs.createMaterial(this.platform4Material, 0, 0);
+            this.platform4 = new Physijs.BoxMesh(this.platform4Geometry, this.platform4PhysicsMaterial, 0);
+            this.platform4.receiveShadow = true;
+            this.platform4.castShadow = true;
+            this.platform4.position.set(60, 0, 50);
+            this.platform4.name = "Platform4";
+            scene.add(this.platform4);
+            console.log("Added a Platform 4 to the scene");
+            //Platform 5
+            this.platform4Texture = new THREE.TextureLoader().load('../../Assets/images/AbstractVarious.jpg');
+            this.platform5Material = new PhongMaterial();
+            this.platform5Material.map = this.platform4Texture;
+            this.platform5Material.bumpScale = 0.2;
+            this.platform5Geometry = new BoxGeometry(5, 6, 5);
+            this.platform5PhysicsMaterial = Physijs.createMaterial(this.platform5Material, 0, 0);
+            this.platform5 = new Physijs.BoxMesh(this.platform5Geometry, this.platform5PhysicsMaterial, 0);
+            this.platform5.receiveShadow = true;
+            this.platform5.castShadow = true;
+            this.platform5.position.set(-60, 0, -50);
+            this.platform5.name = "Platform5";
+            scene.add(this.platform5);
+            console.log("Added a Platform 5 to the scene");
+        };
+        /** */
+        /**
+         * Method for creating the door
+         *
+         * @method setDoor
+         * @return void
+         */
+        Play.prototype.setDoor = function () {
+            this.door1Texture = new THREE.TextureLoader().load('../../Assets/images/doorsTextureNo6901.jpg');
+            this.door1Material = new PhongMaterial();
+            this.door1Material.map = this.door1Texture;
+            this.door1Material.bumpScale = 0.2;
+            this.door1Geometry = new BoxGeometry(3, 7, 0.5);
+            this.door1PhysicsMaterial = Physijs.createMaterial(this.door1Material, 0, 0);
+            this.door1 = new Physijs.BoxMesh(this.door1Geometry, this.door1PhysicsMaterial, 0);
+            this.door1.receiveShadow = true;
+            this.door1.castShadow = true;
+            //Use rng to determine position of door
+            var num = Math.floor(Math.random() * 10);
+            if (num > 5) {
+                if (num > 8) {
+                    this.door1.position.set(60, 5, -51);
+                }
+                else {
+                    this.door1.position.set(-60, 5, -51);
+                }
+            }
+            else {
+                if (num > 3) {
+                    this.door1.position.set(60, 5, 51);
+                }
+                else {
+                    this.door1.position.set(-60, 5, 51);
+                }
+            }
+            this.door1.name = "Door1";
+            scene.add(this.door1);
+        };
+        /**
          * This method creates the coins
          *
          * @method setCoinMesh
@@ -597,25 +733,31 @@ var scenes;
         Play.prototype.checkControls = function () {
             if (this.keyboardControls.enabled) {
                 this.velocity = new Vector3();
+                this.bonusValue--;
+                this.bonusLabel.text = "Bonus: " + this.bonusValue;
                 var time = performance.now();
                 var delta = (time - this.prevTime) / 1000;
                 if (this.isGrounded) {
                     var direction = new Vector3(0, 0, 0);
                     if (this.keyboardControls.moveForward) {
+                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.z -= 400.0 * delta;
                     }
                     if (this.keyboardControls.moveLeft) {
+                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.x -= 400.0 * delta;
                     }
                     if (this.keyboardControls.moveBackward) {
+                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.z += 400.0 * delta;
                     }
                     if (this.keyboardControls.moveRight) {
+                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.x += 400.0 * delta;
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 4) {
+                        if (this.player.position.y > 10) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
@@ -629,7 +771,7 @@ var scenes;
                         this.player.applyCentralForce(direction);
                     }
                     this.cameraLook();
-                } // isGrounded ends
+                } // this.isGrounded ends
                 //reset Pitch and Yaw
                 this.mouseControls.pitch = 0;
                 this.mouseControls.yaw = 0;
@@ -638,6 +780,10 @@ var scenes;
             else {
                 this.player.setAngularVelocity(new Vector3(0, 0, 0));
             }
+        };
+        Play.prototype._unpauseSimulation = function () {
+            scene.onSimulationResume();
+            console.log("resume simulation");
         };
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
         /**
@@ -685,15 +831,256 @@ var scenes;
             this.addSpotLight();
             // Ground Object
             this.addLavaFloor();
+            // Add roads
+            this.addRoads();
+            //Add platforms
+            this.addPlatforms();
             // Add player controller
             this.addPlayer();
             // Add custom coin imported from Blender
             this.setCoinMesh();
-            // Add death plane to the scene
+            //Add door
+            this.setDoor();
+            createjs.Sound.play("muse", 0, 0, 0, -1, 1);
             // Collision Check
+            this.player.addEventListener('collision', function (event) {
+                console.log(event);
+                if (event.name === "Ground") {
+                    createjs.Sound.play("lava");
+                    console.log("Booped ground");
+                    _this.livesValue--;
+                    _this.livesLabel.text = "Lives: " + _this.livesValue;
+                    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                    document.exitPointerLock();
+                    _this.keyboardControls.enabled = false;
+                    _this.mouseControls.enabled = false;
+                    _this.blocker.style.display = '-webkit-box';
+                    _this.blocker.style.display = '-moz-box';
+                    _this.blocker.style.display = 'box';
+                    _this.instructions.style.display = '';
+                    console.log("PointerLock disabled");
+                    _this.scoreValue = 0;
+                    _this.bonusValue = 9999;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                    _this.bonusLabel.text = "Bonus: " + _this.bonusValue;
+                    if (_this.livesValue == 1) {
+                        //window.location.reload(true); // Force reload browser
+                        _this.livesValue = 6;
+                    }
+                    scene.remove(_this.player);
+                    _this.player.position.set(0, 10, 10);
+                    scene.add(_this.player);
+                }
+                if (event.name === "Road1") {
+                    createjs.Sound.play("walk");
+                    console.log("Booped Road1");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road2") {
+                    console.log("Booped Road2");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road3") {
+                    console.log("Booped Road3");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road4") {
+                    console.log("Booped Road4");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road5") {
+                    console.log("Booped Road5");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road6") {
+                    console.log("Booped Road6");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road7") {
+                    console.log("Booped Road7");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road8") {
+                    console.log("Booped Road8");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road9") {
+                    console.log("Booped Road9");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road10") {
+                    console.log("Booped Road10");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road11") {
+                    console.log("Booped Road11");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road12") {
+                    console.log("Booped Road12");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road13") {
+                    console.log("Booped Road13");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road14") {
+                    console.log("Booped Road14");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road15") {
+                    console.log("Booped Road15");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road16") {
+                    console.log("Booped Road16");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road17") {
+                    console.log("Booped Road17");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road18") {
+                    console.log("Booped Road18");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road19") {
+                    console.log("Booped Road19");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road20") {
+                    console.log("Booped Road20");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road21") {
+                    console.log("Booped Road21");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road22") {
+                    console.log("Booped Road22");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road23") {
+                    console.log("Booped Road23");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road24") {
+                    console.log("Booped Road24");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road25") {
+                    console.log("Booped Road25");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road26") {
+                    console.log("Booped Road26");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road27") {
+                    console.log("Booped Road27");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road28") {
+                    console.log("Booped Road28");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road29") {
+                    console.log("Booped Road29");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road30") {
+                    console.log("Booped Road30");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road31") {
+                    console.log("Booped Road31");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Road32") {
+                    console.log("Booped Road32");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Platform1") {
+                    console.log("Booped Platform 1");
+                    _this.isGrounded = true;
+                    createjs.Sound.play("land");
+                }
+                if (event.name === "Platform2") {
+                    console.log("Booped Platform 2");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Platform3") {
+                    console.log("Booped Platform 3");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Platform4") {
+                    console.log("Booped Platform 4");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Platform5") {
+                    console.log("Booped Platform 5");
+                    _this.isGrounded = true;
+                }
+                if (event.name === "Door1") {
+                    createjs.Sound.play("door");
+                    console.log("Booped Door 1");
+                    _this.scoreValue += _this.bonusValue;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                    _this.bonusValue = 9999;
+                    _this.bonusLabel.text = "Bonus: " + _this.bonusValue;
+                    if (_this.recentScoreValue > _this.scoreValue) {
+                        _this.highestScoreValue = _this.recentScoreValue;
+                        _this.highestScoreLabel.text = "High Score: " + _this.highestScoreValue;
+                    }
+                    else {
+                        _this.highestScoreValue = _this.scoreValue;
+                        _this.highestScoreLabel.text = "High Score: " + _this.highestScoreValue;
+                    }
+                    _this.recentScoreValue = _this.scoreValue;
+                    _this.recentScoreLabel.text = "Recent Score: " + _this.recentScoreValue;
+                    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                    document.exitPointerLock();
+                    _this.keyboardControls.enabled = false;
+                    _this.mouseControls.enabled = false;
+                    _this.blocker.style.display = '-webkit-box';
+                    _this.blocker.style.display = '-moz-box';
+                    _this.blocker.style.display = 'box';
+                    _this.instructions.style.display = '';
+                    console.log("PointerLock disabled");
+                    scene.remove(_this.player);
+                    scene.remove(_this.door1);
+                    _this.setDoor();
+                    scene.add(_this.door1);
+                    _this.player.position.set(0, 10, 10);
+                    scene.add(_this.player);
+                    scene.add(_this.coin1);
+                    scene.add(_this.coin2);
+                    scene.add(_this.coin3);
+                    _this.scoreValue = 0;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                }
+                if (event.name === "Coin1") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    _this.scoreValue += 100;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                }
+                if (event.name === "Coin2") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    _this.scoreValue += 100;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                }
+                if (event.name === "Coin3") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    _this.scoreValue += 100;
+                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                }
+            });
             this.player.addEventListener('collision', function (eventObject) {
                 if (eventObject.name === "Ground") {
-                    this.isGrounded = true;
+                    this.this.isGrounded = true;
                     createjs.Sound.play("land");
                 }
                 if (eventObject.name === "Coin") {
@@ -747,7 +1134,9 @@ var scenes;
         Play.prototype.update = function () {
             this.checkControls();
             this.stage.update();
-            this.simulate();
+            if (!this.keyboardControls.paused) {
+                this.simulate();
+            }
         };
         /**
          * Responds to screen resizes
