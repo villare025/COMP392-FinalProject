@@ -30,8 +30,6 @@ var Clock = THREE.Clock;
 // Setup a Web Worker for Physijs
 Physijs.scripts.worker = "/Scripts/lib/Physijs/physijs_worker.js";
 Physijs.scripts.ammo = "/Scripts/lib/Physijs/examples/js/ammo.js";
-var myWorker = new Worker(Physijs.scripts.worker);
-console.log(myWorker);
 // Game Variables
 var scene;
 var currentScene;
@@ -48,11 +46,7 @@ var manifest = [
     { id: "hit", src: "../../Assets/audio/hit.wav" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
-    { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
-    { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
-    { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
-    { id: "muse", src: "../../Assets/audio/toby-fox-UNDERTALE-Soundtrack-51-Another-Medium.mp3" },
     { id: "RestartButton", src: "../../Assets/images/RestartButton.png" }
 ];
 function preload() {
@@ -116,7 +110,6 @@ function setupRenderer() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.shadowMap.enabled = true;
-    renderer.autoClear = true;
     console.log("Finished setting up Renderer...");
 }
 // Setup main camera for the scene

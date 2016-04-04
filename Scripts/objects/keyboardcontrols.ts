@@ -8,7 +8,6 @@ module objects {
         public moveRight: boolean;
         public jump: boolean;
         public enabled: boolean;
-        public paused: boolean;
         // CONSTRUCTOR ++++++++++++++++++++++++++    
         constructor() {
             this.enabled = false;
@@ -39,8 +38,6 @@ module objects {
                 case 32: /* Spacebar */
                     this.jump = true;
                     break;
-                case 81:
-                    this.paused = (this.paused) ? false: true;
             }
         }
 
