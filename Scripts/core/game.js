@@ -38,6 +38,7 @@ var camera;
 var play;
 var menu;
 var over;
+var instructions;
 var stats;
 var canvas;
 var assets;
@@ -47,7 +48,10 @@ var manifest = [
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
-    { id: "RestartButton", src: "../../Assets/images/RestartButton.png" }
+    { id: "RestartButton", src: "../../Assets/images/RestartButton.png" },
+    { id: "InstructionsButton", src: "../../Assets/images/InstructionsButton.png" },
+    { id: "ExitButton", src: "../../Assets/images/ExitButton.png" },
+    { id: "muse", src: "../../Assets/audio/toby-fox-UNDERTALE-Soundtrack-51-Another-Medium.mp3" },
 ];
 function preload() {
     assets = new createjs.LoadQueue();
@@ -140,8 +144,13 @@ function changeScene() {
             scene = over;
             console.log("Starting OVER Scene");
             break;
+        case config.Scene.INSTRUCTIONS:
+            //Show the INSTRUCTIONS scene
+            instructions = new scenes.Instructions();
+            scene = instructions;
+            console.log("Starting INSTRUCTIONS Scene");
+            break;
     }
 }
 window.onload = preload;
-
 //# sourceMappingURL=game.js.map
